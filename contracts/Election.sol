@@ -13,15 +13,24 @@ contract Election{
     //candidate ID mapped to candidate
     mapping (uint => Candidate) public candidates;
 
+	address public owner;
+
+	mapping (address => bool) public voted;
+
     uint public candidateCount;
 
     constructor() public {
+        owner = msg.sender;
+		voted[owner] = false;
+		
         addCandidate("C1");
         addCandidate("C2");
     }
 
     //underscore means local variable, not state variable
     function addCandidate(string memory _name) private{
+
+
         candidateCount++;
         candidates[candidateCount] = Candidate(candidateCount, _name, 0);
     }
@@ -35,6 +44,9 @@ contract Election{
     }
 
     function addVote(uint id) public{
+		require(msg.sender == owner);
+    	require(!voted[msg.sender], "Already Voted!");
         candidates[id].voteCount++;
+        voted[owner] = true;
     }
 }
