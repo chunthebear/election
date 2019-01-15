@@ -27,14 +27,14 @@ contract Election{
     }
 
     function getCandidate(uint id) public view returns(string memory){
-        return string(abi.encodePacked("Name: ",candidates[id].name);
+        return string(abi.encodePacked("Name: ",candidates[id].name));
     }
 
 	function getVote(uint id) public view returns(uint){
         return candidates[id].voteCount;
     }
 
-    function addVote(uint id) private{
+    function addVote(uint id) public{
         candidates[id].voteCount++;
     }
 }
