@@ -13,16 +13,16 @@ contract Election{
     //candidate ID mapped to candidate
     mapping (uint => Candidate) public candidates;
 
-	address public owner;
+    address public owner;
 
-	mapping (address => bool) private voted;
+    mapping (address => bool) private voted;
 
     uint public candidateCount;
 
     constructor() public {
         owner = msg.sender;
-		voted[owner] = false;
-		
+        voted[owner] = false;
+        
         addCandidate("C1");
         addCandidate("C2");
     }
@@ -39,13 +39,13 @@ contract Election{
         return string(abi.encodePacked("Name: ",candidates[id].name));
     }
 
-	function getVote(uint id) public view returns(uint){
+    function getVote(uint id) public view returns(uint){
         return candidates[id].voteCount;
     }
 
     function addVote(uint id) public{
-		require(msg.sender == owner);
-    	require(!voted[msg.sender], "Already Voted!");
+        require(msg.sender == owner);
+        require(!voted[msg.sender], "Already Voted!");
         candidates[id].voteCount++;
         voted[owner] = true;
     }
